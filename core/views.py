@@ -44,6 +44,11 @@ def bookings(request):
     booking_json = serializers.serialize('json', bookings)
     return HttpResponse(booking_json, content_type='application/json')
 
+def bookings_page(request):
+    date = request.GET.get('date',datetime.today().date())
+    bookings = Booking.objects.all().filter(reservation_date=date)
+    return render(request, 'bookings.html', {'bookings':bookings})
+
 def menu(request):
     menu_data = Menu.objects.all()
     main_data = {"menu": menu_data}
